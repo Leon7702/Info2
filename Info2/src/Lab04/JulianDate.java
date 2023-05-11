@@ -1,7 +1,7 @@
 package Lab04;
 import java.util.Scanner;
 
-	public class JulianDate {
+	public class JulianDate { 
 
 		protected int julianDate;
 		protected int day;

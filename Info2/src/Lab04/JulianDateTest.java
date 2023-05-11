@@ -3,7 +3,7 @@ package Lab04;
 
 class JulianDateTest {
 
-	// Main method to run all the tests
+	// Main method to run all the tests 
 		public static void main(String[] args) {
 			testConstructor();
 			testRegulartoJD();

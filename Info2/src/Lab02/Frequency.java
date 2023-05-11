@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.util.HashMap;
 
 public class Frequency {
-
+ 
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
 		

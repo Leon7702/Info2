@@ -12,7 +12,7 @@ public class Histogram {
 		
 		String filename2 = "testP2.txt";
 		FileWriter fw = new FileWriter(filename2);
-//		BufferedWriter bw = new BufferedWriter(fw);
+//		BufferedWriter bw = new BufferedWriter(fw); 
 		
 		File file = new File ("testP2.txt");
 		file.createNewFile();
