@@ -20,7 +20,7 @@ public class MetricDate extends JulianDate {
 		return new MetricDate(day, month, year);
 		
 		
-	} 
+	}  
 	
 	public static int MDtoJD(MetricDate md) {
 		

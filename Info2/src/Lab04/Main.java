@@ -44,7 +44,7 @@ public class Main  {
 		if (currentDay == birthDay && currentMonth == birthMonth) {
 			System.out.println("And congratulations, today is your birthday!");
 		}
-		// print out if days on earth is divisible by 100 
+		// print out if days on earth is divisible by 100  
 		if (daysOld % 100 == 0 && daysOld != 0) {
 			System.out.println("Oh wow, the numbers you are on earth are divisible by 100. Thats nice!");
 		}
