@@ -14,24 +14,54 @@ public class Main {
 		} 
 	}
 
-	public static char determineCharacter (int col, int row) {
-		//if statements for '?'
-		if (row == 1 || row == 2 || row == 39 || row == 40) return '?';
-		if (col == 1 || col == 2 || col == 39 || col == 40) return '?';
-		//if statements for '/'
-		if (row >= 3 && row <= 17 && col >=3 && col <= 16) {
-			if ((row % 2 != 0) && (col % 3 == 0)) return '/';
-			if ((row % 2 == 0) && (col % 3 == 2)) return '/';
-
-			if ((row % 2 == 0) && (col % 3 == 1)) return '=';
-			if ((row % 2 == 0) && (col % 3 == 2)) return ' ';
-
-
-		}
-
 	
-		return ' ';
-		
+
+	    public static char determineCharacter(int column, int row){
+	    	// '?' erstellen
+	    	if(((column >= 0 && column <=2) || (row > 38) || row >= 0 && row <=2) || (column >= 37)) {
+	    		return '?';
+	    	}
+	    	// '+' erstellen
+	    	if((column + row) == 41) { 
+	    		return '+';
+	    	}
+	    	// '-' erstellem
+	    	if(row == 17 && column >= 3 && column < 18) { 
+	    		return '-';
+	    	}
+	    	// '|' erstellen
+	    	if(column == 17 && row > 2 && row < 17) {
+	    		return '|'; 
+	    	}
+	    	// '/' erstellen
+	    	if(column % 3 == 0 && row % 3 == 0 && row > 2 && row < 17 && column > 2 && column < 17) {
+	    		return '/'; 
+	    	}
+	    	if((column+1) % 3 == 0 && (row+2) % 3 == 0 && row > 2 && row <= 16 && column > 2 && column <= 16) {
+	    		return '/'; }
+	    	if((column+2) % 3 == 0 && (row+1) % 3 == 0 && row > 2 && row < 17 && column > 2 && column < 17) {
+	    		return '/';
+	    	}
+	    	// '=' erstellen
+	    	if((column+2) % 3 == 0 && row % 3 == 0 && row > 2 && row < 17 && column > 2 && column < 17) {
+	    		return '=';
+	    	}
+	    	if((column) % 3 == 0 && (row+2) % 3 == 0 && row > 2 && row <= 16 && column >= 3 && column <= 16) { 
+	    		return '=';
+	    	}
+	    	if((column+1) % 3 == 0 && (row+1) % 3 == 0 && row > 2 && row <= 16 && column > 2 && column < 17) {
+	    		return '=';
+	    	}
+	    	// '(' erstellen
+	    	if((row > 17 || column <= 16) && column % 5 == 0 && ((column + row) < 41)) {
+	    		return '('; }
+	    	// ')' erstellen
+	    	if(row % 3 == 0 && ((column + row) > 41)) { 
+	    		return ')';
+	    	}
+	    	return ' '; 
+	    	}
+
 	}
 
-}
+
