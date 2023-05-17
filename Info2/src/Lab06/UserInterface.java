@@ -132,6 +132,12 @@ public class UserInterface
         else if(command.equals("-")) {
             calc.minus();
         }
+        else if(command.equals("*")) {
+            calc.multi();
+        }
+        else if(command.equals("/")) {
+            calc.div();
+        }
         else if(command.equals("=")) {
             calc.equals();
         }

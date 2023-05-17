@@ -83,6 +83,18 @@ public class CalcEngine
         applyOperator('-');
     }
     
+    // * was pressed
+    public void multi()
+    {
+        applyOperator('*');
+    }
+    
+    // / was pressed
+    public void div()
+    {
+        applyOperator('/');
+    }
+    
     /**
      * The '=' button was pressed.
      */
@@ -154,6 +166,16 @@ public class CalcEngine
                 break;
             case '-':
                 displayValue = leftOperand - displayValue;
+                haveLeftOperand = true;
+                leftOperand = displayValue;
+                break;
+            case '*':
+                displayValue = leftOperand * displayValue;
+                haveLeftOperand = true;
+                leftOperand = displayValue;
+                break;
+            case '/':
+                displayValue = leftOperand / displayValue;
                 haveLeftOperand = true;
                 leftOperand = displayValue;
                 break;
