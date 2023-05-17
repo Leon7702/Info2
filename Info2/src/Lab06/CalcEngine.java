@@ -24,7 +24,8 @@ public class CalcEngine
     private int displayValue;
     // The value of an existing left operand.
     private int leftOperand;
-
+    // Vorzeichen
+    private char sign;
     /**
      * Create a CalcEngine.
      */
@@ -56,9 +57,9 @@ public class CalcEngine
         }
         else {
             // Start building a new number.
-            if(lastOperator == '-') {
+            if(sign == '-') {
             	displayValue = number * (-1);
-            	lastOperator = '?';
+            	sign = 0;
             } else {
             	displayValue = number;
             }
@@ -110,6 +111,7 @@ public class CalcEngine
         haveLeftOperand = false;
         buildingDisplayValue = false;
         displayValue = 0;
+        sign = 0;
     }
 
     /**
@@ -174,19 +176,12 @@ public class CalcEngine
                     !(haveLeftOperand && lastOperator == '?')) {
             
         	if(operator == '-') {
-        		lastOperator = '-';
+        		sign = '-';
         	} else {
             	keySequenceError();
         	}
             return;
         }
-        
-        //allow input of negative numbers
-        if(!buildingDisplayValue &&
-                !(haveLeftOperand && lastOperator == '-')) {
-        
-        return;
-    }
 
         if(lastOperator != '?') {
             // First apply the previous operator.
