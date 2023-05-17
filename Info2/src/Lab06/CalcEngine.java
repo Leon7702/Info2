@@ -21,9 +21,9 @@ public class CalcEngine
     private char lastOperator;
 
     // The current value (to be) shown in the display.
-    private int displayValue;
+    private long displayValue;
     // The value of an existing left operand.
-    private int leftOperand;
+    private long leftOperand;
     // Vorzeichen
     private char sign;
     /**
@@ -38,7 +38,7 @@ public class CalcEngine
      * @return The value that should currently be displayed
      * on the calculator display.
      */
-    public int getDisplayValue()
+    public long getDisplayValue()
     {
         return displayValue;
     }
@@ -109,7 +109,7 @@ public class CalcEngine
             buildingDisplayValue = false;
         }
         else {
-            keySequenceError();
+//          keySequenceError();
         }
     }
 

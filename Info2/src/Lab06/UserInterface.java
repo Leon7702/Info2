@@ -16,18 +16,18 @@ import javax.swing.border.*;
 public class UserInterface
     implements ActionListener
 {
-    private CalcEngine calc;
-    private boolean showingAuthor;
+    protected CalcEngine calc;
+    protected boolean showingAuthor;
 
-    private JFrame frame;
-    private JTextField display;
-    private JLabel status;
+    protected JFrame frame;
+    protected JTextField display;
+    protected JLabel status;
 
     /**
      * Create a user interface.
      * @param engine The calculator engine.
      */
-    public UserInterface(CalcEngine engine)
+    protected UserInterface(CalcEngine engine)
     {
         calc = engine;
         showingAuthor = true;
@@ -39,7 +39,7 @@ public class UserInterface
      * Set the visibility of the interface.
      * @param visible true if the interface is to be made visible, false otherwise.
      */
-    public void setVisible(boolean visible)
+    protected void setVisible(boolean visible)
     {
         frame.setVisible(visible);
     }
@@ -47,7 +47,7 @@ public class UserInterface
     /**
      * Make the frame for the user interface.
      */
-    private void makeFrame()
+    protected void makeFrame()
     {
         frame = new JFrame(calc.getTitle());
         
@@ -97,7 +97,7 @@ public class UserInterface
      * @param panel The panel to receive the button.
      * @param buttonText The text for the button.
      */
-    private void addButton(Container panel, String buttonText)
+    protected void addButton(Container panel, String buttonText)
     {
         JButton button = new JButton(buttonText);
         button.addActionListener(this);
@@ -156,7 +156,7 @@ public class UserInterface
      * Update the interface display to show the current value of the 
      * calculator.
      */
-    private void redisplay()
+    protected void redisplay()
     {
         display.setText("" + calc.getDisplayValue());
     }
@@ -165,7 +165,7 @@ public class UserInterface
      * Toggle the info display in the calculator's status area between the
      * author and version information.
      */
-    private void showInfo()
+    protected void showInfo()
     {
         if(showingAuthor)
             status.setText(calc.getVersion());
