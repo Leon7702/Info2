@@ -11,6 +11,7 @@ public class Calculator
 {
     private CalcEngine engine;
     private UserInterface gui;
+    private HexaNotation gui2;
 
     /**
      * Create a new calculator and show it.
@@ -18,7 +19,7 @@ public class Calculator
     public Calculator()
     {
         engine = new CalcEngine();
-        gui = new UserInterface(engine);
+        gui2 = new HexaNotation(engine);
     }
 
     /**

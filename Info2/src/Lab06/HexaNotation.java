@@ -2,6 +2,7 @@ package Lab06;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -53,7 +54,7 @@ public class HexaNotation extends UserInterface {
             addButton(buttonPanel, "/");
             
             addButton(buttonPanel, "=");
-            addButton(buttonPanel, "C");
+            addButton(buttonPanel, "c");
             addButton(buttonPanel, "?");
             buttonPanel.add(new JLabel(" "));
       
@@ -63,6 +64,68 @@ public class HexaNotation extends UserInterface {
         contentPane.add(status, BorderLayout.SOUTH);
 
         frame.pack();
+    }
+	
+	@Override
+	public void actionPerformed(ActionEvent event)
+    {
+        String command = event.getActionCommand();
+
+        if(command.equals("0") ||
+           command.equals("1") ||
+           command.equals("2") ||
+           command.equals("3") ||
+           command.equals("4") ||
+           command.equals("5") ||
+           command.equals("6") ||
+           command.equals("7") ||
+           command.equals("8") ||
+           command.equals("9")) {
+            int number = Integer.parseInt(command);
+            calc.numberPressed(number);
+        }
+        else if(command.equals("A")) {
+            calc.numberPressed(10);
+        }
+        else if(command.equals("B")) {
+            calc.numberPressed(11);
+        }
+        else if(command.equals("C")) {
+            calc.numberPressed(12);
+        }
+        else if(command.equals("D")) {
+            calc.numberPressed(13);
+        }
+        else if(command.equals("E")) {
+            calc.numberPressed(14);
+        }
+        else if(command.equals("F")) {
+            calc.numberPressed(15);
+        }
+        else if(command.equals("+")) {
+            calc.plus();
+        }
+        else if(command.equals("-")) {
+            calc.minus();
+        }
+        else if(command.equals("*")) {
+            calc.multi();
+        }
+        else if(command.equals("/")) {
+            calc.div();
+        }
+        else if(command.equals("=")) {
+            calc.equals();
+        }
+        else if(command.equals("c")) {
+            calc.clear();
+        }
+        else if(command.equals("?")) {
+            showInfo();
+        }
+        // else unknown command.
+
+        redisplay();
     }
 
 }
