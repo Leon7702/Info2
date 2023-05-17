@@ -56,7 +56,12 @@ public class CalcEngine
         }
         else {
             // Start building a new number.
-            displayValue = number;
+            if(lastOperator == '-') {
+            	displayValue = number * (-1);
+            	lastOperator = '?';
+            } else {
+            	displayValue = number;
+            }
             buildingDisplayValue = true;
         }
     }
@@ -82,12 +87,10 @@ public class CalcEngine
      */
     public void equals()
     {
-        // This should completes the building of a second operand,
+        // This should complete the building of a second operand,
         // so ensure that we really have a left operand, an operator
         // and a right operand.
-        if(haveLeftOperand &&
-                lastOperator != '?' &&
-                buildingDisplayValue) {
+        if(haveLeftOperand && lastOperator != '?' && buildingDisplayValue) {
             calculateResult();
             lastOperator = '?';
             buildingDisplayValue = false;
@@ -169,9 +172,21 @@ public class CalcEngine
         // result using '='.
         if(!buildingDisplayValue &&
                     !(haveLeftOperand && lastOperator == '?')) {
-            keySequenceError();
+            
+        	if(operator == '-') {
+        		lastOperator = '-';
+        	} else {
+            	keySequenceError();
+        	}
             return;
         }
+        
+        //allow input of negative numbers
+        if(!buildingDisplayValue &&
+                !(haveLeftOperand && lastOperator == '-')) {
+        
+        return;
+    }
 
         if(lastOperator != '?') {
             // First apply the previous operator.
