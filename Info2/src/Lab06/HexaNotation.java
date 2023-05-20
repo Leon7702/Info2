@@ -16,7 +16,6 @@ import javax.swing.border.EmptyBorder;
 
 public class HexaNotation extends UserInterface {
 
-	private boolean useHEX = true;
 	private Map<String, JButton> buttonMap;
 	private JCheckBox checkbox;
 
@@ -179,12 +178,18 @@ public class HexaNotation extends UserInterface {
 
         redisplay();
     }
+	
+	protected String convertToHex() {
+		
+		String s = Integer.toHexString((int)calc.getDisplayValue()).toUpperCase();
+		return s;
+	}
 
 	@Override
     protected void redisplay()
     {
-        if(useHEX) {
-        	display.setText("" + Integer.toHexString((int)calc.getDisplayValue()).toUpperCase());
+        if(checkbox.isSelected()) {
+        	display.setText(convertToHex());
 
         } else {
             display.setText("" + calc.getDisplayValue());
@@ -192,5 +197,6 @@ public class HexaNotation extends UserInterface {
         }
     	
     }
+	
 }
 
