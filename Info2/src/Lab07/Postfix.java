@@ -1,5 +1,6 @@
 package Lab07;
 
+import java.util.Scanner;
 import java.util.Stack;
 
 public class Postfix {
@@ -24,7 +25,7 @@ public class Postfix {
         }
     }
 
-	public static int evaluate (String pfx) throws OverflowException, UnderflowException {
+	public static double evaluate (String pfx) throws OverflowException, UnderflowException {
 		StackAsList<String> s = new StackAsList<String>();
 		
 		for(int i=0; i< pfx.length(); i++) {
@@ -36,29 +37,29 @@ public class Postfix {
 				String lhs = s.top();
 				s.pop();
 				
-				int result = 0;
+				double result = 0;
 				switch(pfx.charAt(i)) {
 				case '*':
-					result = Integer.valueOf(lhs) * Integer.valueOf(rhs);
+					result = Double.valueOf(lhs) * Double.valueOf(rhs);
 					break;
 				case '+':
-					result = Integer.valueOf(lhs) + Integer.valueOf(rhs);
+					result = Double.valueOf(lhs) + Double.valueOf(rhs);
 					break;
 				case '-':
-					result = Integer.valueOf(lhs) - Integer.valueOf(rhs);
+					result = Double.valueOf(lhs) - Double.valueOf(rhs);
 					break;
 				case '/':
-					result = Integer.valueOf(lhs) / Integer.valueOf(rhs);
+					result = Double.valueOf(lhs) / Double.valueOf(rhs);
 					break;
 				case '^':
-					result = (int) Math.pow(Integer.valueOf(lhs), Integer.valueOf(rhs));
+					result =  Math.pow(Double.valueOf(lhs), Double.valueOf(rhs));
 					break;
 				}	
 					
 				s.push(result +"");
 			}
 		}
-		return Integer.valueOf(s.top());
+		return Double.valueOf(s.top());
 	}
 
 	public static String infixToPostfix(String infix) throws OverflowException, UnderflowException, NonSenseException {
@@ -104,12 +105,31 @@ public class Postfix {
         return sb.toString();
     }
 	
+	public static void calcInput() throws OverflowException, UnderflowException, NonSenseException {
+		Scanner inputReader = new Scanner(System.in);
+		String input = null;
+		System.out.println("Enter an infix expression with no spaces: ");
+		input = inputReader.next();
+		String pfx;
+		pfx = infixToPostfix(input);
+		System.out.println(evaluate(pfx));
+		
+		
+	}
+	
 
 	public static void main(String args[]) throws OverflowException, UnderflowException, NonSenseException {
-		String pfx = "123*+45^-6+";
-		System.out.println(evaluate(pfx));
-//		String inx = "1+2*3-4^5+6";
-//		System.out.println(infixToPostfix(inx));
+	
+//		calcInput();
+		System.out.println(infixToPostfix("1*2+3"));
+		System.out.println(infixToPostfix("1+2*3"));
+		System.out.println(infixToPostfix("1+2-3^4"));
+		System.out.println(infixToPostfix("1+2*3-4^5+6"));
+		System.out.println(infixToPostfix("(1+2)*3+(4^(5-6))"));
+		System.out.println(infixToPostfix("(1+2)*3+(4^(5-6))"));
+		System.out.println(infixToPostfix("1+2+3/4+5+6*(7+8)"));
+		System.out.println(infixToPostfix("9-1-2-3*2-1"));
+
 
 
 	}
