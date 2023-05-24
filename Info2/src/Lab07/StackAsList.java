@@ -1,68 +1,70 @@
 package Lab07;
 
-public class StackAsList implements Stack{
+public class StackAsList<T> implements Stack<T> {
 
-	class Node {
-		Object value;
-		Node next;
-	}
-	
-	private Node head;
-	
-	public StackAsList(Object obj) {
-		head = new Node();
-		head.value = obj;
-		head.next = null;
-	}
-	
-	@Override
-	public void push(Object x) throws OverflowException {
-		Node newNode = new Node();
-		newNode.value = x;		
-		Node tmp = new Node();
-		tmp.value = head.value;
-		head = newNode;
-		newNode = tmp;
-		head.next = newNode;
-	}
+    class Node {
+        T value;
+        Node next;
+    }
 
-	@Override
-	public void pop() throws UnderflowException {
-		if(head == null) {
-			throw new UnderflowException("There is nothing to pop.");
-		} else {
-			head = head.next;
-		}
-	}
+    private Node head;
 
-	@Override
-	public Object top() throws UnderflowException {
+    public StackAsList() {
+        head = new Node();
+        head = null;
+    }
+    
+    public StackAsList(T obj) {
+        head = new Node();
+        head.value = obj;
+        head.next = null;
+    }
 
-		return head.value;
-	}
+    public void push(T x) throws OverflowException {
+        Node newNode = new Node();
+        newNode.value = x;
+        newNode.next = head;
+        head = newNode;
+    }
 
-	@Override
-	public boolean isEmpty() {
+    public void pop() throws UnderflowException {
+        if (head == null) {
+            throw new UnderflowException("There is nothing to pop.");
+        } else {
+            head = head.next;
+        }
+    }
 
-		if(head == null) {
-			return true;
-		} else {
-			return false;
+    public T top() throws UnderflowException {
+        return head.value;
+    }
 
-		}
-	}
+    public boolean isEmpty() {
+        return head == null;
+    }
 
-	@Override
-	public void makeEmpty() {
-		head = null;
-	}
-	
-	@Override
-	public String toString() {
-		
-		
-		
-		return null;
-	}
+    public void makeEmpty() {
+        head = null;
+    }
 
+    @Override
+    public String toString() {
+        if (isEmpty()) {
+            return "Stack is empty.";
+        } else {
+            StringBuilder sb = new StringBuilder();
+            Node current = head;
+            sb.append("Stack: [");
+            sb.append(current.value);
+
+            while (current.next != null) {
+                current = current.next;
+                sb.append(", ");
+                sb.append(current.value);
+            }
+
+            sb.append("]");
+            return sb.toString();
+        }
+    }
 }

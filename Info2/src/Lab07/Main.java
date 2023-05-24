@@ -2,27 +2,17 @@ package Lab07;
 
 public class Main {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws UnderflowException, OverflowException {
 
 		String s = "1";
 		String t = "2";
 		String r = "3";
 
-		StackAsList stack = new StackAsList(s);
-		try {
-			stack.push(t);
-			stack.push(r);
-			System.out.println(stack.top());
-			stack.pop();
-			System.out.println(stack.top());
-			stack.pop();
-//			System.out.println(stack.top());
+		StackAsList<String> stack = new StackAsList<String>();
+		stack.push("hello");
+		stack.push("bye");
+		System.out.println(stack.toString());
 
-		} catch (OverflowException e) {
-			e.printStackTrace();
-		} catch (UnderflowException e) {
-			e.printStackTrace();
-		}
 		
 	}
 
