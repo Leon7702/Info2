@@ -7,7 +7,6 @@ import org.junit.Test;
 public class PostfixTest {
 
     private static final double DELTA = 1e-10; // Delta value for comparing double values
-
 	
 	@Test
 	public void testEvaluate() throws OverflowException, UnderflowException {
