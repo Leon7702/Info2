@@ -28,7 +28,7 @@ public class StackAsList<T> implements Stack<T> {
     }
 
     public void pop() throws UnderflowException {
-        if (head == null) {
+        if (isEmpty()) {
             throw new UnderflowException("There is nothing to pop.");
         } else {
             head = head.next;
@@ -36,7 +36,12 @@ public class StackAsList<T> implements Stack<T> {
     }
 
     public T top() throws UnderflowException {
-        return head.value;
+        if (isEmpty()) {
+            throw new UnderflowException("There is nothing.");
+        } else {
+            return head.value;
+
+        }
     }
 
     public boolean isEmpty() {

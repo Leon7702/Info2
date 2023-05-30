@@ -1,7 +1,6 @@
 package Lab07;
 
 import java.util.Scanner;
-import java.util.Stack;
 
 public class Postfix {
 	
@@ -10,7 +9,7 @@ public class Postfix {
 				|| a=='7'|| a=='8'|| a == '9');
 	}
 	
-	public static int getPrecedence(char operator) {
+	public static int getPriority(char operator) {
         switch (operator) {
             case '+':
             case '-':
@@ -25,38 +24,38 @@ public class Postfix {
         }
     }
 
-	public static double evaluate (String pfx) throws OverflowException, UnderflowException {
+	public static double evaluate (String postfix) throws OverflowException, UnderflowException {
 		StackAsList<String> s = new StackAsList<String>();
 		
-		for(int i=0; i< pfx.length(); i++) {
-			if(operand(pfx.charAt(i))) {
-				s.push(pfx.charAt(i)+"");
+		for(int i=0; i< postfix.length(); i++) {
+			if(operand(postfix.charAt(i))) {
+				s.push(postfix.charAt(i)+"");
 			} else {
-				String rhs = s.top();
+				String rightSide = s.top();
 				s.pop();
-				String lhs = s.top();
+				String leftSide = s.top();
 				s.pop();
 				
 				double result = 0;
-				switch(pfx.charAt(i)) {
+				switch(postfix.charAt(i)) {
 				case '*':
-					result = Double.valueOf(lhs) * Double.valueOf(rhs);
+					result = Double.valueOf(leftSide) * Double.valueOf(rightSide);
 					break;
 				case '+':
-					result = Double.valueOf(lhs) + Double.valueOf(rhs);
+					result = Double.valueOf(leftSide) + Double.valueOf(rightSide);
 					break;
 				case '-':
-					result = Double.valueOf(lhs) - Double.valueOf(rhs);
+					result = Double.valueOf(leftSide) - Double.valueOf(rightSide);
 					break;
 				case '/':
-					result = Double.valueOf(lhs) / Double.valueOf(rhs);
+					result = Double.valueOf(leftSide) / Double.valueOf(rightSide);
 					break;
 				case '^':
-					result =  Math.pow(Double.valueOf(lhs), Double.valueOf(rhs));
+					result =  Math.pow(Double.valueOf(leftSide), Double.valueOf(rightSide));
 					break;
 				}	
 					
-				s.push(result +"");
+				s.push(result + "");
 			}
 		}
 		return Double.valueOf(s.top());
@@ -68,13 +67,13 @@ public class Postfix {
 		StackAsList<Character> stack = new StackAsList<Character>();
 		
 		for (int i = 0; i < infix.length(); i++) {
-            char c = infix.charAt(i);
+            char current = infix.charAt(i);
 
-            if (operand(c)) {
-            	sb.append(c);
-            } else if (c == '(') {
-                stack.push(c);
-            } else if (c == ')') {
+            if (operand(current)) {
+            	sb.append(current);
+            } else if (current == '(') {
+                stack.push(current);
+            } else if (current == ')') {
                 while (!stack.isEmpty() && stack.top() != '(') {
                     sb.append(stack.top());
                     stack.pop();
@@ -86,11 +85,11 @@ public class Postfix {
 
                 stack.pop(); 
             } else {
-                while (!stack.isEmpty() && getPrecedence(c) <= getPrecedence(stack.top())) {
+                while (!stack.isEmpty() && getPriority(current) <= getPriority(stack.top())) {
                     sb.append(stack.top());
                     stack.pop();
                 }
-                stack.push(c);
+                stack.push(current);
             }
         }
 
@@ -113,22 +112,16 @@ public class Postfix {
 		String pfx;
 		pfx = infixToPostfix(input);
 		System.out.println(evaluate(pfx));
-		
-		
+				
 	}
 	
 
 	public static void main(String args[]) throws OverflowException, UnderflowException, NonSenseException {
 	
 //		calcInput();
-		System.out.println(infixToPostfix("1*2+3"));
-		System.out.println(infixToPostfix("1+2*3"));
-		System.out.println(infixToPostfix("1+2-3^4"));
-		System.out.println(infixToPostfix("1+2*3-4^5+6"));
-		System.out.println(infixToPostfix("(1+2)*3+(4^(5-6))"));
-		System.out.println(infixToPostfix("(1+2)*3+(4^(5-6))"));
-		System.out.println(infixToPostfix("1+2+3/4+5+6*(7+8)"));
-		System.out.println(infixToPostfix("9-1-2-3*2-1"));
+		String s = "a+b^c*d^e^f-g-h/(i+j)";
+		System.out.println(infixToPostfix(s));
+	
 
 
 
