@@ -153,13 +153,10 @@ public class HexaNotation extends UserInterface {
 					String resultHex =  Integer.toHexString((int)resultDouble);
 					calc.setDisplayValue("" + resultHex.toUpperCase());
 				} catch (OverflowException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				} catch (UnderflowException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				} catch (NonSenseException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
         	} else {
@@ -167,13 +164,10 @@ public class HexaNotation extends UserInterface {
 	        	try {
 					calc.equals(calc.getDisplayValue());
 				} catch (OverflowException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				} catch (UnderflowException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				} catch (NonSenseException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
         	}
@@ -216,11 +210,7 @@ public class HexaNotation extends UserInterface {
 	protected void convertToHex() {
 		
 		hexString = calc.getDisplayValue();
-		
-		
-//		if(calc.getDisplayValue().contains("A") || calc.getDisplayValue().contains("B") || calc.getDisplayValue().contains("C") ||
-//		   calc.getDisplayValue().contains("D") || calc.getDisplayValue().contains("E") || calc.getDisplayValue().contains("F")) 
-			
+				
 		if(calc.getDisplayValue().contains("A")) {
 			hexString = hexString.replace("A", "(5+5)");
 		}
