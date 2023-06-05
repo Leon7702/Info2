@@ -123,23 +123,34 @@ public class UserInterface
            command.equals("7") ||
            command.equals("8") ||
            command.equals("9")) {
-            int number = Integer.parseInt(command);
-            calc.numberPressed(number);
+            String number = command;
+            calc.buttonPressed(number);
         }
         else if(command.equals("+")) {
-            calc.plus();
+        	calc.buttonPressed("+");
         }
         else if(command.equals("-")) {
-            calc.minus();
+        	calc.buttonPressed("-");
         }
         else if(command.equals("*")) {
-            calc.multi();
+        	calc.buttonPressed("*");
         }
         else if(command.equals("/")) {
-            calc.div();
+        	calc.buttonPressed("/");
         }
         else if(command.equals("=")) {
-            calc.equals();
+        	try {
+				calc.equals(calc.getDisplayValue());
+			} catch (OverflowException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (UnderflowException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (NonSenseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
         }
         else if(command.equals("C")) {
             calc.clear();
@@ -147,7 +158,6 @@ public class UserInterface
         else if(command.equals("?")) {
             showInfo();
         }
-        // else unknown command.
 
         redisplay();
     }

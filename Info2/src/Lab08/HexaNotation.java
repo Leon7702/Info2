@@ -18,6 +18,7 @@ public class HexaNotation extends UserInterface {
 
 	private Map<String, JButton> buttonMap;
 	private JCheckBox checkbox;
+	private String hexString;
 
 
 	public HexaNotation(CalcEngine engine) {
@@ -108,41 +109,74 @@ public class HexaNotation extends UserInterface {
            command.equals("7") ||
            command.equals("8") ||
            command.equals("9")) {
-            int number = Integer.parseInt(command);
-            calc.numberPressed(number);
+            String number = command;
+            calc.buttonPressed(number);
         }
         else if(command.equals("A")) {
-            calc.numberPressed(10);
+            calc.buttonPressed("A");
         }
         else if(command.equals("B")) {
-            calc.numberPressed(11);
+            calc.buttonPressed("B");
         }
         else if(command.equals("C")) {
-            calc.numberPressed(12);
+            calc.buttonPressed("C");
         }
         else if(command.equals("D")) {
-            calc.numberPressed(13);
+            calc.buttonPressed("D");
         }
         else if(command.equals("E")) {
-            calc.numberPressed(14);
+            calc.buttonPressed("E");
         }
         else if(command.equals("F")) {
-            calc.numberPressed(15);
+            calc.buttonPressed("F");
         }
         else if(command.equals("+")) {
-            calc.plus();
+        	calc.buttonPressed("+");
         }
         else if(command.equals("-")) {
-            calc.minus();
+        	calc.buttonPressed("-");
         }
         else if(command.equals("*")) {
-            calc.multi();
+        	calc.buttonPressed("*");
         }
         else if(command.equals("/")) {
-            calc.div();
+        	calc.buttonPressed("/");
         }
         else if(command.equals("=")) {
-            calc.equals();
+            
+        	if(checkbox.isSelected()) {
+        		try {
+        			convertToHex();
+					calc.equals(hexString);
+					String resultString = calc.getDisplayValue();
+					double resultDouble = Double.parseDouble(resultString);
+					String resultHex =  Integer.toHexString((int)resultDouble);
+					calc.setDisplayValue("" + resultHex.toUpperCase());
+				} catch (OverflowException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (UnderflowException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (NonSenseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+        	} else {
+        	
+	        	try {
+					calc.equals(calc.getDisplayValue());
+				} catch (OverflowException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (UnderflowException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (NonSenseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+        	}
         }
         else if(command.equals("c")) {
             calc.clear();
@@ -179,24 +213,46 @@ public class HexaNotation extends UserInterface {
         redisplay();
     }
 	
-	protected String convertToHex() {
+	protected void convertToHex() {
 		
-		String s = Integer.toHexString((int)calc.getDisplayValue()).toUpperCase();
-		return s;
+		hexString = calc.getDisplayValue();
+		
+		
+//		if(calc.getDisplayValue().contains("A") || calc.getDisplayValue().contains("B") || calc.getDisplayValue().contains("C") ||
+//		   calc.getDisplayValue().contains("D") || calc.getDisplayValue().contains("E") || calc.getDisplayValue().contains("F")) 
+			
+		if(calc.getDisplayValue().contains("A")) {
+			hexString = hexString.replace("A", "(5+5)");
+		}
+		if(calc.getDisplayValue().contains("B")) {
+			hexString = hexString.replace("B", "(5+6)");
+		}
+		if(calc.getDisplayValue().contains("C")) {
+			hexString = hexString.replace("C", "(5+7)");
+		}
+		if(calc.getDisplayValue().contains("D")) {
+			hexString = hexString.replace("D", "(5+8)");
+		}
+		if(calc.getDisplayValue().contains("E")) {
+			hexString = hexString.replace("E", "(5+9)");
+		}
+		if(calc.getDisplayValue().contains("F")) {
+			hexString = hexString.replace("F", "(6+9)");
+		}
+		
 	}
 
 	@Override
-    protected void redisplay()
-    {
-        if(checkbox.isSelected()) {
-        	display.setText(convertToHex());
+    protected void redisplay() {
+		
+          display.setText("" + calc.getDisplayValue());
 
-        } else {
-            display.setText("" + calc.getDisplayValue());
+        
+	}
 
-        }
-    	
-    }
-	
 }
+    	
+    
+	
+
 
