@@ -1,66 +1,148 @@
 package Lab10;
 
+import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Point;
+import java.awt.Polygon;
+import java.awt.Toolkit;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 public class Main extends JFrame {
-  public static final int WINDOW_SIZE = 512;
-  public static final int THRESHOLD = 2; // stopping criterion for recursion
-  public static int P1_x, P1_y, P2_x, P2_y, P3_x, P3_y;
+	
+	//getting the max screensize 
+	static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+    private static int wHeight = (int) screenSize.getHeight();
+    private static int wWidth;
+    private JPanel canvas;
+    private static final int stopCriterion = 10; // stopping criterion for recursion
+    private static int A_x, A_y, B_x, B_y, C_x, C_y;
 
-  public Main() {
-    super("Sierpinski");
+    private int depth; //counts the recurisve calls
+    
+    private Color[] colors = { Color.WHITE, Color.BLACK, Color.LIGHT_GRAY, Color.DARK_GRAY, Color.CYAN, Color.PINK,
+            Color.YELLOW, Color.RED, Color.WHITE, Color.BLUE };
 
-    setSize(WINDOW_SIZE, WINDOW_SIZE);
+    
+    
+    public Main() {
+        super("Sierpinski");
 
-    // A simple triangle
-    P1_x = (int) getSize().getWidth() / 2;
-    P1_y = 40;
-    P2_x = 20;
-    P2_y = (int) getSize().getHeight() - 20;
-    P3_x = (int) getSize().getWidth() - 20;
-    P3_y = (int) getSize().getHeight() - 20;
+        // Calculate initial width based on the initial height
+        wWidth = (int) (2 * wHeight / (Math.sqrt(3)));
 
-    setVisible(true);
+        //setting the size of the window
+        setSize(wWidth, wHeight);
+        
 
-    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-  }
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-  // Compute the midpoint
-  public Point getMiddle(Point p1, Point p2) {
-    return new Point((int) (p1.getX() + p2.getX()) / 2, (int) (p1.getY() + p2.getY()) / 2);
-  }
+        // Create a canvas panel and add it to the frame
+        canvas = new JPanel() {
+            @Override
+            public void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                //calls the draw method to start recursion 
+                draw(new Point(A_x, A_y), new Point(B_x, B_y), new Point(C_x, C_y), g);
+            }
+            
+        };
+        
+        //adds the canvas to the component
+        add(canvas);
+        
+        //displays it in the middle of the display
+        setLocationRelativeTo(canvas);
 
-  public void paint(Graphics g) {
-    super.paint(g);
+        setVisible(true);
 
-    draw(new Point(P1_x, P1_y), new Point(P2_x, P2_y), new Point(P3_x, P3_y));
-  }
+        // Add a component listener to handle window size changes
+        // Method gets called anyways, because it is in Main constructor
+        addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                // Calculate new width and height based on the maximum height of the window
+                wHeight = getContentPane().getHeight();
+                wWidth = (int) (2 * wHeight / (Math.sqrt(3)));
+                
+             // Setting or updating the coordinates of the triangle
+                A_x = wWidth / 2;
+                A_y = 0;
 
-  public void draw(Point p1, Point p2, Point p3) {
-    // termination condition
-    if (p1.distance(p2) < THRESHOLD && p1.distance(p3) < THRESHOLD && p2.distance(p3) < THRESHOLD)
-      return; // stop recursion
-    // draw the current triangle
-    Graphics g = getGraphics();
-    g.drawLine((int) p1.getX(), (int) p1.getY(), (int) p2.getX(), (int) p2.getY());
-    g.drawLine((int) p2.getX(), (int) p2.getY(), (int) p3.getX(), (int) p3.getY());
-    g.drawLine((int) p3.getX(), (int) p3.getY(), (int) p1.getX(), (int) p1.getY());
-    // recursively draw the 3 smaller corner triangles
-    Point m12 = getMiddle(p1, p2);
-    Point m23 = getMiddle(p2, p3);
-    Point m31 = getMiddle(p3, p1);
-    // Recursive calls
-    draw(p1, m12, m31);
+                B_x = 0;
+                B_y = wHeight;
 
-    draw(p2, m23, m12);
+                C_x = wWidth;
+                C_y = wHeight;
+                
+             // Set the preferred size of the canvas to maintain the aspect ratio
+                canvas.setPreferredSize(new Dimension(wWidth, wHeight));
+                pack(); // Pack the frame to adjust its size to the preferred size
 
-    draw(p3, m31, m23);
-  }
 
-  public static void main(String[] args) {
-    new Main();
-  }
+                // Repaint the canvas when the window is resized
+                canvas.repaint();
+            }
+        });
+    }
+    
+    
+    
+    
+
+    // method that computes the midpoint from 2 given points
+    public Point getMiddle(Point A, Point B) {
+    	//calculates new X value und new Y value of middlepoint and retuns point
+        return new Point((int) (A.getX() + B.getX()) / 2, (int) (A.getY() + B.getY()) / 2);
+    }
+    
+    
+    
+    
+
+    public void draw(Point A, Point B, Point C, Graphics g) {
+    	
+        // Termination condition
+        if (A.distance(B) < stopCriterion && A.distance(C) < stopCriterion && B.distance(C) < stopCriterion)
+            return; // Stop recursion
+        
+        // Draw the current triangle
+        //getting the values for X and Y of the 3 points.
+        int[] xpoints = { (int) A.getX(), (int) B.getX(), (int) C.getX() }; // Top, Right, Left
+        int[] ypoints = { (int) A.getY(), (int) B.getY(), (int) C.getY() };
+       
+        
+        g.drawPolygon(new Polygon(xpoints, ypoints, 3));
+        g.setColor(colors[depth % colors.length]);
+        g.fillPolygon(xpoints, ypoints, 3);
+
+        
+        //Set the middle points calling our getMiddle method
+        Point midAB = getMiddle(A, B);
+        Point midBC = getMiddle(B, C);
+        Point midCA = getMiddle(C, A);
+        
+        //Adding +1 because we are entering the recursive call 
+        depth++;
+
+        // Recursive calls - Recursively draw the 3 smaller corner triangles
+        draw(A, midAB, midCA, g);
+        draw(B, midBC, midAB, g);
+        draw(C, midCA, midBC, g);
+
+        //we only want to increment when entering a new level, not each time of recursive call method - that why we have to subtract one
+        depth--;
+        
+    } 
+
+    public static void main(String[] args) {
+        new Main();
+    }        
 }
+
+
+
